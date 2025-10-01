@@ -1,3 +1,5 @@
+
+
 import express from "express";
 import getEnv from "./utils/getEnv";
 import router from "./router/router";
@@ -5,6 +7,13 @@ import cookieParser from 'cookie-parser';
 import setLangCookie from './middlewares/setLangCookie';
 import session from 'express-session';
 import { v4 as uuidv4 } from 'uuid';
+
+declare module "express-session" {
+  interface SessionData {
+    userType: string;
+    userId: string;
+  }
+}
 
 const env = getEnv();
 const app = express();
