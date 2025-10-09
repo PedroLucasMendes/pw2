@@ -45,3 +45,15 @@ export const removeProduct = async (id: string): Promise<Product | null> => {
         return null;
     }
 }
+
+export const updateProduct = async (name: string, data: createProductDto): Promise<Product> => {
+  try {
+    return await prisma.product.update({
+      where: { name }, // busca pelo nome
+      data,
+    });
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

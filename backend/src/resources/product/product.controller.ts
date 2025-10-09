@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { createProduct, getProduct, findProductById, removeProduct } from "./product.service"
+import { createProduct, getProduct, findProductById, removeProduct, updateProduct } from "./product.service"
 import { createProductDto } from "./product.type";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
@@ -24,36 +24,38 @@ const create = async (req: Request, res: Response) => {
 
 }
 
-// Lê um produto pelo ID
 const read = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-        const product = await findProductById(id);
-        if (!product) {
-            return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
-        }
-        res.status(StatusCodes.OK).json(product);
-    } catch (error) {
-        console.error(error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  const { name } = req.params; // rota deve ser /products/:name
+  try {
+    const product = await findProductById(name);
+    if (!product) {
+      return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
     }
+    res.status(StatusCodes.OK).json(product);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  }
 };
 
-// Atualiza um produto existente
 const update = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const data = req.body as createProductDto;
-    try {
-        const existing = await findProductById(id);
-        if (!existing) {
-            return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
-        }
-        const updated = await createProduct({ ...existing, ...data }); // Simples substituição
-        res.status(StatusCodes.OK).json(updated);
-    } catch (error) {
-        console.error(error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  const { name } = req.params;
+  const data = req.body as createProductDto;
+  try {
+    const existing = await findProductById(name);
+    if (!existing) {
+      return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
     }
+    const updated = await updateProduct(name, data);
+    res.status(StatusCodes.OK).json(updated);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+  }
 };
 
 const remove = async (req: Request, res: Response) => {
