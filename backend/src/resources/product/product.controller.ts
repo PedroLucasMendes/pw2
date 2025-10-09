@@ -12,7 +12,7 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
     const product = req.body as createProductDto;
     try {
-        if(await findProductById(product.name)) {
+        if (await findProductById(product.name)) {
             return res.status(StatusCodes.CONFLICT).json(ReasonPhrases.CONFLICT);
         }
         const newProduct = await createProduct(product);
@@ -24,16 +24,43 @@ const create = async (req: Request, res: Response) => {
 
 }
 
+// Lê um produto pelo ID
+const read = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const product = await findProductById(id);
+        if (!product) {
+            return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
+        }
+        res.status(StatusCodes.OK).json(product);
+    } catch (error) {
+        console.error(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+    }
+};
 
-const read = async (req: Request, res: Response) => {}
-const update = async (req: Request, res: Response) => {}
-
+// Atualiza um produto existente
+const update = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const data = req.body as createProductDto;
+    try {
+        const existing = await findProductById(id);
+        if (!existing) {
+            return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
+        }
+        const updated = await createProduct({ ...existing, ...data }); // Simples substituição
+        res.status(StatusCodes.OK).json(updated);
+    } catch (error) {
+        console.error(error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+    }
+};
 
 const remove = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
 
-        if(!id) { return res.status(StatusCodes.BAD_REQUEST).json(ReasonPhrases.BAD_REQUEST); }
+        if (!id) { return res.status(StatusCodes.BAD_REQUEST).json(ReasonPhrases.BAD_REQUEST); }
         await removeProduct(id);
         res.status(StatusCodes.OK).json(ReasonPhrases.OK);
 

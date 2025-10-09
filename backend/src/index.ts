@@ -19,15 +19,18 @@ const env = getEnv();
 const app = express();
 
 app.use(express.json());
-app.use(router);
 app.use(cookieParser());
 app.use(setLangCookie);
-app.use(session({
- genid: (req) => uuidv4(),
- secret: 'Hi9Cf#mK98',
- resave: true,
- saveUninitialized: true
-}));
+app.use(
+  session({
+    genid: () => uuidv4(),
+    secret: "Hi9Cf#mK98",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(router);
 
 app.listen(env.PORT, () => {
   console.log(`App running on port ${env.PORT}.`);
