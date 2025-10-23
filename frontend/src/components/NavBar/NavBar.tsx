@@ -2,6 +2,7 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Link from "next/link";
 import Image from "next/image";
+import { link } from "node:fs/promises";
 
 export function NavBar() {
   return (
@@ -12,15 +13,21 @@ export function NavBar() {
       </NavbarBrand>
       <NavbarToggle />
       <NavbarCollapse>
-        <NavbarLink href="#" active>
+        <NavbarLink as={Link} href="/" active>
           Home
         </NavbarLink>
-        <NavbarLink as={Link} href="#">
+        <NavbarLink as={Link} href="/about">
           About
         </NavbarLink>
-        <NavbarLink href="#">Services</NavbarLink>
-        <NavbarLink href="#">Pricing</NavbarLink>
-        <NavbarLink href="#">Contact</NavbarLink>
+        <NavbarLink as={Link} href="/services">
+          Services
+        </NavbarLink>
+        <NavbarLink as={Link} href="/pricing">
+          Pricing
+        </NavbarLink>
+        <NavbarLink as={Link} href="/contact">
+          Contact
+        </NavbarLink>
       </NavbarCollapse>
     </Navbar>
   );

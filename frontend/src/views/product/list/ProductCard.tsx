@@ -19,7 +19,7 @@ function ProductCard({ product }: ProductCardProps) {
 
 
     return (
-        <Card href="#" className="max-w-sm">
+        <Card href={`/products/${product.id}`} className="max-w-sm">
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {product.name}
         </h5>
