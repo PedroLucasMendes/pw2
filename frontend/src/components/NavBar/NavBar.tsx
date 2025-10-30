@@ -2,7 +2,6 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Link from "next/link";
 import Image from "next/image";
-import { link } from "node:fs/promises";
 
 export function NavBar() {
   return (
@@ -20,7 +19,7 @@ export function NavBar() {
           About
         </NavbarLink>
         <NavbarLink as={Link} href="/product/create">
-          Services
+          Criar Produto
         </NavbarLink>
         <NavbarLink as={Link} href="/pricing">
           Pricing

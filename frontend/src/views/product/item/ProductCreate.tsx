@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, } from 'react';
+import { useRef, useState, } from 'react';
 import { FormEvent } from 'react';
 import { Button } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
@@ -27,9 +27,6 @@ function ProductCreate() {
   
   console.log(randomNumber)
   console.log(randomNumberRef)
-
-
-
 
   const handleSubmit = (e: FormEvent) => {
 
@@ -73,47 +70,50 @@ function ProductCreate() {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">Criar produto</h1>
-      <form method="post" onSubmit={handleSubmit} className='flex'>
+      <h1 className="text-2xl font-bold mb-4">Criar produto</h1>
+
+      <form method="post" onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
+
         <TextInput 
-         value={name} 
-         onChange={setName} 
-         error ={errors['name']}
-         name="name" 
-         label="Nome" 
-         focus
+          value={name} 
+          onChange={setName} 
+          error={errors['name']}
+          name="name" 
+          label="Nome" 
+          focus
         />
+
         <TextInput 
-         value={price} 
-         onChange={setPrice} 
-         name="price" 
-         label="Preço" 
-         error = {errors['price']}
-         
+          value={price} 
+          onChange={setPrice} 
+          name="price" 
+          label="Preço" 
+          error={errors['price']}
         />
+
         <NumberInput 
-         value={stock} 
-         onChange={setStock} 
-         name="stock" 
-         label="Estoque" 
-         error = {errors['stock']}
-         
+          value={Number.isNaN(stock) ? 0 : stock} 
+          onChange={setStock} 
+          name="stock" 
+          label="Estoque" 
+          error={errors['stock']}
         />
+
         <TextArea 
-         value={description} 
-         onChange={setDescription} 
-         name="description" 
-         label="Descrição" 
-         rows={6}
+          value={description} 
+          onChange={setDescription} 
+          name="description" 
+          label="Descrição" 
+          rows={6}
         />
+
         <button 
-         type="submit" 
-         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          type="submit" 
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Criar Produto
         </button>
       </form>
-
     </>
   );
 }

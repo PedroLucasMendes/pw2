@@ -20,8 +20,11 @@ function NumberInput({name, value, label, placeholder, onChange, required, error
       <FBTextInput
         id={name}
         type="text"
-        onChange={(e) => onChange(Number(e.target.value))}
-        value={value}
+        onChange={(e) => {
+    const val = e.target.value;
+    onChange(val === '' ? 0 : parseFloat(val));
+  }}
+        value={Number.isNaN(value) ? '' : value}
         placeholder={placeholder ?? ''}
         required={required ?? false}
         shadow
