@@ -1,21 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, } from 'react';
 import { FormEvent } from 'react';
 import { Button } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
+
+import productSchema from '../Product.schema';
+
 import TextInput from '@/components/form/TextInput/TextInput';
 import NumberInput from '@/components/form/NumberInput/NumberInput';
 import TextArea from '@/components/form/TextArea/TextArea';
 import { CreateProductDto } from '../Product.types';
 
+
 function ProductCreate() {
+
   const [name, setName] = useState('')
   const [price, setPrice] = useState("0.00")
   const [stock, setStock] = useState(0)
   const [description, setDescription] = useState("")
   const router = useRouter();
+  const [errors, setErrors] = useState<Record<string,string>>({})
+  
+  const randomNumber = Math.random()*100
+  const randomNumberRef = useRef<Number>(Math.random()*100)
+  
+  console.log(randomNumber)
+  console.log(randomNumberRef)
+
+
+
+
   const handleSubmit = (e: FormEvent) => {
+
     e.preventDefault();
     const product: CreateProductDto = {
         name,
@@ -23,7 +40,19 @@ function ProductCreate() {
         stock,
         description
     };
-    fetch(`${process.env.NEXT_PUBLIC_API}/product`, {
+
+    const { error } = productSchema.validate(product, {abortEarly: false})
+
+    if(error){
+      const errorsDetails: Record<string,string> = {}
+      console.log(error.details)
+      for (const errorDetail of error.details){
+        errorsDetails[errorDetail.path[0]] = errorDetail.message
+
+      }
+      setErrors(errorsDetails)
+    }else{
+      fetch(`${process.env.NEXT_PUBLIC_API}/product`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,13 +67,9 @@ function ProductCreate() {
     .catch((error) => {
         console.error('Erro ao criar produto:', error);
     });
-
-    console.log('Produto criado:', product);
-    setName('');
-    setPrice('0.00');
-    setStock(0);
-    setDescription('');
-  };
+  }
+    
+};
 
   return (
     <>
@@ -53,23 +78,26 @@ function ProductCreate() {
         <TextInput 
          value={name} 
          onChange={setName} 
+         error ={errors['name']}
          name="name" 
          label="Nome" 
-         required
+         focus
         />
         <TextInput 
          value={price} 
          onChange={setPrice} 
          name="price" 
          label="Preço" 
-         required
+         error = {errors['price']}
+         
         />
         <NumberInput 
          value={stock} 
          onChange={setStock} 
          name="stock" 
          label="Estoque" 
-         required
+         error = {errors['stock']}
+         
         />
         <TextArea 
          value={description} 
