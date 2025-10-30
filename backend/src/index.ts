@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser';
 import setLangCookie from './middlewares/setLangCookie';
 import session from 'express-session';
 import { v4 as uuidv4 } from 'uuid';
-
+import cors from 'cors';
 declare module "express-session" {
   interface SessionData {
     userType: string;
@@ -19,6 +19,7 @@ const env = getEnv();
 const app = express();
 
 app.use(express.json());
+app.use(cors({ origin: "*" }));
 app.use(cookieParser());
 app.use(setLangCookie);
 app.use(

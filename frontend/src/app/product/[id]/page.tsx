@@ -1,6 +1,6 @@
 import { fetchExternalImage } from "next/dist/server/image-optimizer";
 import React from "react";  
-
+import ProductDetails from "@/views/product/item/ProductDetails";
 interface ProductPageProps {
     params: Promise<{
         id: string;
@@ -9,14 +9,9 @@ interface ProductPageProps {
 
 async function ProductPage({ params }: ProductPageProps) {
     const { id } = await params;
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_DOCKER_API}/product/${id}`);
     const product = await response.json();
-  return (
-    <div>
-      <h1>Product Page</h1>
-      <p>Product ID: {id}</p>
-    </div>
-  );
+    return <ProductDetails product={product} />;
 }
 
 export default ProductPage;

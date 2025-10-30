@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
-import { createProduct, getProduct, findProductById, removeProduct, updateProduct } from "./product.service"
+import { createProduct, getProducts, findProductByName, removeProduct, updateProduct, getProduct } from "./product.service"
 import { createProductDto } from "./product.type";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
 const index = async (req: Request, res: Response) => {
-    const product = await getProduct();
+    const product = await getProducts();
     res.json(product);
 }
 
@@ -12,7 +12,7 @@ const index = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
     const product = req.body as createProductDto;
     try {
-        if (await findProductById(product.name)) {
+        if (await findProductByName(product.name)) {
             return res.status(StatusCodes.CONFLICT).json(ReasonPhrases.CONFLICT);
         }
         const newProduct = await createProduct(product);
@@ -25,26 +25,17 @@ const create = async (req: Request, res: Response) => {
 }
 
 const read = async (req: Request, res: Response) => {
-  const { name } = req.params; // rota deve ser /products/:name
-  try {
-    const product = await findProductById(name);
-    if (!product) {
-      return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
-    }
-    res.status(StatusCodes.OK).json(product);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json(ReasonPhrases.INTERNAL_SERVER_ERROR);
-  }
-};
+    const { id } = req.params;
+    if(!id) res.status(StatusCodes.BAD_REQUEST).json(ReasonPhrases.BAD_REQUEST);
+    const product = await getProduct(id);
+    res.json(product);
+}
 
 const update = async (req: Request, res: Response) => {
   const { name } = req.params;
   const data = req.body as createProductDto;
   try {
-    const existing = await findProductById(name);
+    const existing = await findProductByName(name);
     if (!existing) {
       return res.status(StatusCodes.NOT_FOUND).json(ReasonPhrases.NOT_FOUND);
     }

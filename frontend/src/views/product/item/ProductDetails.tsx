@@ -9,7 +9,7 @@ function ProductDetails({ product }: productDetailsProps) {
         <>
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <div>{product.description}</div>
-            <div>Price: ${product.price}</div>
+            <div>Price: ${parseFloat(product.price).toFixed(2)}</div>
         </>
     );
 }

@@ -5,7 +5,7 @@ import { createProductDto } from "./product.type";
 
 const prisma = new PrismaClient();
 
-export const getProduct = async() => {
+export const getProducts = async() => {
     return prisma.product.findMany({
         where: {
             status: ProductStatus.active
@@ -13,13 +13,20 @@ export const getProduct = async() => {
     });
 }
 
-export const findProductById = async (name: string): Promise<Product | null> => {
-    return prisma.product.findFirst({
-        where: {
-            name
-        }
-    });
+export const findProductByName = async(
+    name: string,
+): Promise<Product | null> => {
+    return prisma.product.findFirst({where: {name} });
 }
+
+
+export const getProduct = async(
+    id: string,
+): Promise<Product | null> => {
+    return prisma.product.findFirst({where: {id} });
+}
+
+
 
 export const createProduct = async (product: createProductDto): Promise<Product> => {
     return prisma.product.create({

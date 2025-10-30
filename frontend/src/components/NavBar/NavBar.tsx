@@ -19,7 +19,7 @@ export function NavBar() {
         <NavbarLink as={Link} href="/about">
           About
         </NavbarLink>
-        <NavbarLink as={Link} href="/services">
+        <NavbarLink as={Link} href="/product/create">
           Services
         </NavbarLink>
         <NavbarLink as={Link} href="/pricing">
