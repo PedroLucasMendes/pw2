@@ -13,10 +13,23 @@ interface ProductCardProps {
 function ProductCard({ product }: ProductCardProps) {
 
     const [qtdCart, setQtdCart] = useState<number>(0);
+    // Forma que ao clicar não redireciona para a página do produto
+    const decreaseCart = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setQtdCart((p) => Math.max(p - 1, 0));
+    };
+    
+    const increaseCart = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setQtdCart((p) => Math.min(p + 1, 100));
+    };
 
+    /* Forma do professor
     const decreaseCart = () => setQtdCart((p) => Math.max(p - 1, 0));
     const increaseCart = () => setQtdCart((p) => Math.min(p + 1, 100));
-
+    */
 
     return (
         <Card href={`/product/${product.id}`} className="max-w-sm">
