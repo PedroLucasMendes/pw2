@@ -29,7 +29,11 @@ const login= async (req: Request, res: Response) => {
         req.session.userType = user.userTypeId;
         req.session.userId = user.id;
 
-        res.status(StatusCodes.OK).json(ReasonPhrases.OK);
+        res.status(StatusCodes.OK).json({
+            userId: user.id,
+            userType: user.userTypeId,
+            userName: user.name,
+        });
 
     }catch (err){
         console.log(err);

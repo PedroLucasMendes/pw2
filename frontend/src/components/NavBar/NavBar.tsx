@@ -1,9 +1,15 @@
+'use client'
 
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useContext } from "react";
+import { CounterContext } from "@/providers/CounterProvider/CounterProvider";
 
 export function NavBar() {
+  
+  const {increment} = useContext(CounterContext);
+
   return (
     <Navbar fluid rounded>
       <NavbarBrand as={Link} href="https://flowbite-react.com">
@@ -26,6 +32,9 @@ export function NavBar() {
         </NavbarLink>
         <NavbarLink as={Link} href="/contact">
           Contact
+        </NavbarLink>
+        <NavbarLink as={Link} href="/login">
+          Login
         </NavbarLink>
       </NavbarCollapse>
     </Navbar>

@@ -1,10 +1,11 @@
 "use client";
 
 import { Card } from "flowbite-react";
-import { useState } from "react";
+import { use, useContext, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import styles from "../../product/Product.module.css";
 import { ProductDto } from "../Product.types";
+import { CounterContext } from "@/providers/CounterProvider/CounterProvider";
 
 interface ProductCardProps {
   product: ProductDto;
@@ -26,6 +27,8 @@ function ProductCard({ product }: ProductCardProps) {
         setQtdCart((p) => Math.min(p + 1, 100));
     };
 
+    const {count} = useContext(CounterContext);
+
     /* Forma do professor
     const decreaseCart = () => setQtdCart((p) => Math.max(p - 1, 0));
     const increaseCart = () => setQtdCart((p) => Math.min(p + 1, 100));
@@ -44,6 +47,7 @@ function ProductCard({ product }: ProductCardProps) {
             {qtdCart}
             <button className={styles.buttonIcon} onClick={increaseCart} disabled={qtdCart === 100}><FaPlus /></button>
         </p>
+        <h1 className="">{count}</h1>
         </Card>
     );
 }

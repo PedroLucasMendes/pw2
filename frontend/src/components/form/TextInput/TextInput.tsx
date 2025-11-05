@@ -11,10 +11,10 @@ interface TextInputProps {
   error?: string;
   onChange: (s: string) => void;
   focus?:boolean;
-  
+  type?: string;
 }
 
-function TextInput({name, value, label, placeholder, onChange, error,focus}: TextInputProps) {
+function TextInput({name, value, label, placeholder, onChange, error,focus,type}: TextInputProps) {
   const ref = useRef<HTMLInputElement>(null)
   useEffect(() => {
     if(focus) ref.current?.focus()
@@ -26,9 +26,9 @@ function TextInput({name, value, label, placeholder, onChange, error,focus}: Tex
         <FBTextInput
           ref={ref}
           id={name}
-          type="text"
           onChange={(e) => onChange(e.target.value)}
           value={value}
+          type={type ?? 'text'}
           placeholder={placeholder ?? ''}
           color={error ? 'failure' : 'gray'}
           shadow
