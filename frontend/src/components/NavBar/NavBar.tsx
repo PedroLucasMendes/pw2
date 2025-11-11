@@ -5,10 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { useContext } from "react";
 import { CounterContext } from "@/providers/CounterProvider/CounterProvider";
+import { AuthContext } from "@/providers/AuthProvider/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export function NavBar() {
   
   const {increment} = useContext(CounterContext);
+  const { user, logout } = useContext(AuthContext)
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("login")
+  }
 
   return (
     <Navbar fluid rounded>
@@ -33,9 +42,12 @@ export function NavBar() {
         <NavbarLink as={Link} href="/contact">
           Contact
         </NavbarLink>
-        <NavbarLink as={Link} href="/login">
+        {!user && <NavbarLink as={Link} href="/login">
           Login
-        </NavbarLink>
+        </NavbarLink>}
+        {user && <NavbarLink as={Link} href="#" onSubmit={handleLogout}>
+          Logout
+        </NavbarLink>}
       </NavbarCollapse>
     </Navbar>
   );

@@ -1,4 +1,4 @@
-import { cleanEnv, num, port } from "envalid";
+import { cleanEnv, num, port,url } from "envalid";
 import dotenv from "dotenv";
 
 dotenv.config({ quiet : true});
@@ -8,7 +8,7 @@ function getEnv(){
 
         PORT: port({ default: 7788 }),
         BCRYPT_ROUNDS : num({ default: 10 }),
-
+        FRONTEND_URL: url()
     })
 }
 

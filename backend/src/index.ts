@@ -19,7 +19,7 @@ const env = getEnv();
 const app = express();
 
 app.use(express.json());
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: env.FRONTEND_URL , credentials: true}));
 app.use(cookieParser());
 app.use(setLangCookie);
 app.use(
