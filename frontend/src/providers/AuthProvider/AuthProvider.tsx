@@ -1,7 +1,7 @@
 'use client'
 
 import api from "@/utils/api";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 
 interface UserSession {
     userId: string;
@@ -25,6 +25,16 @@ export const AuthContext = createContext<IAuthContext>(initialAuthContextData);
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        api.get("/auth/me").then((res) => {
+            if (res.status === 200) {
+                setUser(res.data);
+            }
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
 
     const login = async (email: string, password: string) => {
 

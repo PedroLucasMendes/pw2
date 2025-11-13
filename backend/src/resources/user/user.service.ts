@@ -8,6 +8,15 @@ import { User } from "../../generated/prisma";
 const prisma = new PrismaClient();
 const env = getEnv();
 
+export const getUser = async(userId?: string) : Promise<UserDto | null> => {
+    if (!userId) return null;
+    return await prisma.user.findFirst({
+        where: {
+            id: userId
+        }
+    });
+}
+
 export const getUsers = async() : Promise<UserDto[]> => {
     const users = await prisma.user.findMany();
 

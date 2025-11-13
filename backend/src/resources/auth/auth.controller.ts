@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { SignUpDto } from './auth.types';
-import { createUser } from '../user/user.service';
+import { createUser, getUser } from '../user/user.service';
 import { UserTypes } from '../userType/userType.constants';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { checkCredentials } from './auth.service';
@@ -40,6 +40,20 @@ const login= async (req: Request, res: Response) => {
         res.json(err)   
     }
 }
+
+const me = async (req: Request, res: Response) => {
+    const user = await getUser(req.session.userId);
+    if (user) {
+        return res.status(StatusCodes.OK).json({
+            userId: user.id,
+            userType: user.userTypeId,
+            userName: user.name,
+        });
+    } else{
+        return res.status(StatusCodes.UNAUTHORIZED).json(ReasonPhrases.UNAUTHORIZED);
+    }
+}
+
 const logout = async (req: Request, res: Response) => {
     
     delete req.session.userId;
@@ -55,4 +69,5 @@ export default {
   signup,
   login,
   logout,
+  me
 };
