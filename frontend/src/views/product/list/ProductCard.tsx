@@ -7,18 +7,17 @@ import styles from "../../product/Product.module.css";
 import { ProductDto } from "../Product.types";
 import { CounterContext } from "@/providers/CounterProvider/CounterProvider";
 import Link from "next/link";
+import { CartContext } from "@/providers/CartProvider/CartProvider";
 
 interface ProductCardProps {
   product: ProductDto;
 }
 
 function ProductCard({ product }: ProductCardProps) {
-
-    const [qtdCart, setQtdCart] = useState<number>(0);
-    // Forma que ao clicar não redireciona para a página do produto
-
-    const decreaseCart = () => setQtdCart((p) => Math.max(p - 1, 0));
-    const increaseCart = () => setQtdCart((p) => Math.min(p + 1, 100));
+    const {cartProducts, incCartProduct, decCartProduct} = useContext(CartContext)
+    const qtdCart = cartProducts[product.id] ?? 0
+    const decreaseCart = () => decCartProduct(product.id);
+    const increaseCart = () => incCartProduct(product.id);
 
     return (
         <Card className="max-w-sm">

@@ -3,6 +3,7 @@ import "./globals.css";
 import { NavBar } from "@/components/NavBar/NavBar";
 import CounterProvider from "@/providers/CounterProvider/CounterProvider";
 import AuthProvider from "@/providers/AuthProvider/AuthProvider";
+import CartProvider from "@/providers/CartProvider/CartProvider";
 
 export const metadata: Metadata = {
   title: "Minha loja virtual",
@@ -20,6 +21,9 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <CounterProvider>
+            <CartProvider>
+              
+            </CartProvider>
             <NavBar />
             <div className="container mx-auto">
               {children}
