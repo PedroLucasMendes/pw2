@@ -105,6 +105,7 @@ function ProductCreate() {
           name="description" 
           label="Descrição" 
           rows={6}
+          error={errors['description']}
         />
 
         <button 
