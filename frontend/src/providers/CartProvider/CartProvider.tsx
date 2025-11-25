@@ -1,4 +1,4 @@
-import {createContext, useState, ReactNode };
+import { createContext, ReactNode, useState } from "react";
 
 interface CartContextProps {
     cartProducts: Record<string, number>; 
@@ -15,8 +15,8 @@ const initialCart: CartContextProps = {
 
 export const CartContext = createContext<CartContextProps>(initialCart)
 
-function CartProvider({ children } : { children: ReactNode}) { 
-    const [cartProducts, setCartProducts] = useState<ReactNode>
+function CartProvider({ children } : { children: ReactNode }) { 
+    const [cartProducts, setCartProducts] = useState<Record<string, number>>({})
     const incCartProduct = (productId: string) => {
         setCartProducts(c => ({
             ...c,
@@ -25,16 +25,21 @@ function CartProvider({ children } : { children: ReactNode}) {
     }
     const decCartProduct = (productId: string) => {
         if (cartProducts[productId] === 1) {
-            const copyCartProducts = { ...cartProducts }
-            delete copyCartProducts[productId];
-            setCartProducts(copyCartProducts);
+          const copyCartProducts = { ...cartProducts }
+          delete copyCartProducts[productId];
+          setCartProducts(copyCartProducts);
         } else {
-        setCartProducts((c) => ({
+          setCartProducts((c) => ({
             ...c,
             [productId]: c[productId] - 1
             }));
         }
     };
+    return <CartContext.Provider value={{
+        cartProducts,
+        incCartProduct,
+        decCartProduct
+    }}>{children}</CartContext.Provider>
 }
 
 export default CartProvider

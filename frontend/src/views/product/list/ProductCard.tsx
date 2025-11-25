@@ -15,7 +15,7 @@ interface ProductCardProps {
 
 function ProductCard({ product }: ProductCardProps) {
     const {cartProducts, incCartProduct, decCartProduct} = useContext(CartContext)
-    const qtdCart = cartProducts[product.id] ?? 0
+    const qtdCart = cartProducts[product.id] ?? 0;
     const decreaseCart = () => decCartProduct(product.id);
     const increaseCart = () => incCartProduct(product.id);
 

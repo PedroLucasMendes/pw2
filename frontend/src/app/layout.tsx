@@ -22,12 +22,11 @@ export default function RootLayout({
         <AuthProvider>
           <CounterProvider>
             <CartProvider>
-              
+              <NavBar />
+              <div className="container mx-auto">
+                {children}
+              </div>
             </CartProvider>
-            <NavBar />
-            <div className="container mx-auto">
-              {children}
-            </div>
           </CounterProvider>
         </AuthProvider>
       </body>
