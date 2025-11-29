@@ -32,7 +32,7 @@ function Login() {
         <div>
             <h1 className="">Login do usuario</h1>
 
-            <form onSubmit={handleSubmit()} className="flex flex-col gap-4 max-w-md">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-md">
 
                 <TextInput 
                 value={email} 

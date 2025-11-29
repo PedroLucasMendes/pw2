@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../generated/prisma';
+import { PrismaClient } from "@prisma/client";
 import { getCart } from '../purchase/purchase.service';
 
 
@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 export const decPurchaseItem = async (userId: string, productId: string) => {
     const cart = await getCart(userId);
-    const purchaseItem = await prisma.purchaseItem.findFirst({
+    let purchaseItem = await prisma.purchaseItem.findFirst({
         where: {
             purchaseId: cart.id,
             productId

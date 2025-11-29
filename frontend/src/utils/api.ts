@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseURL = typeof window === "undefined" ? process.env.NEXT_PUBLIC_API_URL : process.env.NEXT_PUBLIC_DOCKER_API
+const baseURL = typeof window === "undefined" 
+    ? process.env.NEXT_PUBLIC_DOCKER_API  // Servidor: usa nome Docker
+    : process.env.NEXT_PUBLIC_API; 
 
 const api = axios.create({
     baseURL: baseURL,

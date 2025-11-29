@@ -9,6 +9,7 @@ const create = async (req : Request, res : Response ) => {
     const data = req.body as CreateUserDto;
     try {
         const user = await createUser(data)
+        console.log(user);
         res.json(user); 
     }catch(err){
         res.json(err);

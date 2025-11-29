@@ -1,4 +1,4 @@
-import { PrismaClient } from "../../generated/prisma";
+import { PrismaClient, Purchase } from "@prisma/client";
 import { PurchaseStatus } from "./purchase.constants";
 
 const prisma = new PrismaClient();
@@ -10,7 +10,7 @@ export const getCart = async (userId: string): Promise<Purchase> => {
             status: PurchaseStatus.cart
         },
         include: {
-            items: true
+            purchaseItems: true
         }
     });
 

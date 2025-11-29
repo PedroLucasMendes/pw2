@@ -21,13 +21,20 @@ const signup = async (req: Request, res: Response) => {
 
 }
 const login= async (req: Request, res: Response) => {
-
+    console.log("login attempt");
     const data = req.body as LoginDto;
     try {
         const user = await checkCredentials(data);
         if (!user) return res.status(StatusCodes.UNAUTHORIZED).json(ReasonPhrases.UNAUTHORIZED);
         req.session.userType = user.userTypeId;
         req.session.userId = user.id;
+
+        req.session.save((err) => {
+            if (err) {
+                console.log(err);
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ReasonPhrases.INTERNAL_SERVER_ERROR);
+            }
+        });
 
         res.status(StatusCodes.OK).json({
             userId: user.id,

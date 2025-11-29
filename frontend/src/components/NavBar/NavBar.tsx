@@ -39,13 +39,13 @@ export function NavBar() {
         <NavbarLink as={Link} href="/pricing">
           Pricing
         </NavbarLink>
-        <NavbarLink as={Link} href="/contact">
-          Contact
+        <NavbarLink as={Link} href="/cart">
+          Carrinho
         </NavbarLink>
         {!user && <NavbarLink as={Link} href="/login">
           Login
         </NavbarLink>}
-        {user && <NavbarLink as={Link} href="#" onSubmit={handleLogout}>
+        {user && <NavbarLink as={Link} href="#" onClick={handleLogout}>
           Logout
         </NavbarLink>}
       </NavbarCollapse>

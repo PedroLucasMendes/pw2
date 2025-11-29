@@ -43,6 +43,14 @@ model UserType {
  User User[]
 }
 
+model Session {
+  id String @id
+  sid String @unique
+  data String
+  expiresAt DateTime
+}
+
+
 model  Purchase {
   id String @id @default(uuid()) @db.Char(36)
   userId String @db.Char(36)

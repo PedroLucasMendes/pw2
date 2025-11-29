@@ -40,7 +40,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 
         try{
             const res = await api.post("/auth/login", {email, password})
-
+            console.log("login response", res);
             if (res.status === 200) {
                 setUser(res.data);
                 return true;
@@ -54,6 +54,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     const logout = async () => {
+        console.log("logout");
         const res = await api.post("/auth/logout")
         if (res.status === 200) {
             setUser(null);
